@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "690294938429",
+    "project_id": "skylens-d08da",
+    "storage_bucket": "skylens-d08da.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:690294938429:android:ae525d0c955f4ac9434354",
+        "android_client_info": {
+          "package_name": "com.example.sklens_user_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_Rg3UGYta4sF2jsEwecyFZtStroEKkfM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:690294938429:android:5405c3a8dd297ecc434354",
+        "android_client_info": {
+          "package_name": "com.example.slad_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_Rg3UGYta4sF2jsEwecyFZtStroEKkfM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
