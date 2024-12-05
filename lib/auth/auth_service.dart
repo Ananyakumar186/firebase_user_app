@@ -15,4 +15,8 @@ class AuthService {
     final userLogged = await _auth.signInWithEmailAndPassword(email: email, password: password);
     return userLogged.user!;
   }
+
+  static Future<void> logout(){
+    return _auth.signOut();
+  }
 }
