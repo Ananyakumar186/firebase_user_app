@@ -6,7 +6,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:sklens_user_app/auth/auth_service.dart';
 import 'package:sklens_user_app/pages/login_page.dart';
+import 'package:sklens_user_app/pages/telescope_detail_page.dart';
 import 'package:sklens_user_app/pages/view_telescope.dart';
+import 'package:sklens_user_app/providers/cart_provider.dart';
+import 'package:sklens_user_app/providers/telescope_provider.dart';
 import 'package:sklens_user_app/providers/user_provider.dart';
 import 'package:sklens_user_app/utils/colors.dart';
 import 'firebase_options.dart';
@@ -18,6 +21,8 @@ void main() async {
   );
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (context) => UserProvider()),
+    ChangeNotifierProvider(create: (context) => TelescopeProvider()),
+    ChangeNotifierProvider(create: (context) => CartProvider()),
   ], child:  MyApp()));
 }
 
@@ -73,22 +78,28 @@ class MyApp extends StatelessWidget {
       initialLocation: ViewTelescope.routeName,
       debugLogDiagnostics: true,
       redirect: (context, state) {
-        if (AuthService.currentUser != null) {
-          return ViewTelescope.routeName;
-        } else {
+        if (AuthService.currentUser == null) {
           return LoginPage.routeName;
         }
+        return null;
       },
       routes: [
         GoRoute(
           path: LoginPage.routeName,
           name: LoginPage.routeName,
-          builder: (context, state) => LoginPage(),
+          builder: (context, state) => const LoginPage(),
         ),
         GoRoute(
           path: ViewTelescope.routeName,
           name: ViewTelescope.routeName,
-          builder: (context, state) => ViewTelescope(),
+          builder: (context, state) => const ViewTelescope(),
+          routes: [
+            GoRoute(
+              path: TelescopeDetailPage.routeName,
+              name: TelescopeDetailPage.routeName,
+              builder: (context, state) =>  TelescopeDetailPage(id: state.extra! as String,),
+            )
+          ]
         )
       ]);
 }

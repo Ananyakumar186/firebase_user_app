@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import 'package:sklens_user_app/auth/auth_service.dart';
 import 'package:sklens_user_app/customWidgets/login_section.dart';
 import 'package:sklens_user_app/customWidgets/registration_section.dart';
+import 'package:sklens_user_app/pages/view_telescope.dart';
+import 'package:sklens_user_app/providers/user_provider.dart';
 import 'package:sklens_user_app/utils/colors.dart';
 import 'package:sklens_user_app/utils/helper_functions.dart';
 
@@ -58,11 +64,13 @@ class _LoginPageState extends State<LoginPage> {
             segments: const [
               ButtonSegment<AuthChoice>(
                 value: AuthChoice.login,
-                label: Text('LOGIN',style: TextStyle(fontWeight: FontWeight.bold)),
+                label: Text('LOGIN',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
               ),
               ButtonSegment<AuthChoice>(
                 value: AuthChoice.register,
-                label: Text('REGISTER',style: TextStyle(fontWeight: FontWeight.bold)),
+                label: Text('REGISTER',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
               )
             ],
             selected: {_authChoice},
@@ -89,7 +97,8 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 secondChild: RegistrationSection(
                   onSuccess: () {
-                    showMsg(context, 'User Registered Successfully, Please Login!');
+                    showMsg(
+                        context, 'User Registered Successfully, Please Login!');
                   },
                   onFailure: (value) {
                     setState(() {
@@ -104,30 +113,52 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
           ),
-          if(_errMsg.isNotEmpty)
+          if (_errMsg.isNotEmpty)
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text(_errMsg, style: TextStyle(fontSize: 18, color: Colors.red),),
+              child: Text(
+                _errMsg,
+                style: TextStyle(fontSize: 18, color: Colors.red),
+              ),
             ),
           const Padding(
             padding: EdgeInsets.all(8.0),
-            child: Text('OR', textAlign: TextAlign.center, style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+            child: Text(
+              'OR',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
           ),
           ElevatedButton.icon(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: kShrineBrown900,
-              foregroundColor: kShrineSurfaceWhite
-            ),
-            onPressed: _signInWithGoogle,
-            icon: const Icon(Icons.g_mobiledata),
-            label: const Text('SIGN IN WITH GOOGLE', style: TextStyle(fontWeight: FontWeight.bold),)
-          )
-
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: kShrineBrown900,
+                  foregroundColor: kShrineSurfaceWhite),
+              onPressed: _signInWithGoogle,
+              icon: const Icon(Icons.g_mobiledata),
+              label: const Text(
+                'SIGN IN WITH GOOGLE',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ))
         ],
       ),
     ));
   }
 
-  void _signInWithGoogle() {
+  void _signInWithGoogle() async {
+    final crendential = await AuthService.signInWithGoogle();
+    EasyLoading.show(status: 'Please Wait!');
+    final exists = await Provider.of<UserProvider>(context, listen: false)
+        .doesUserExist(crendential.user!.uid);
+    if (!exists) {
+      await Provider.of<UserProvider>(context, listen: false).addUser(
+          user: crendential.user!,
+          name: crendential.user!.displayName,
+          phone: crendential.user!.phoneNumber);
+    }
+
+    if(EasyLoading.isShow) {
+      EasyLoading.dismiss();
+    }
+    context.goNamed(ViewTelescope.routeName);
   }
 }

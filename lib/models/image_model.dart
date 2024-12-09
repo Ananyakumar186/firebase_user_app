@@ -1,23 +1,27 @@
 class ImageModel {
   String? imageName;
   String? directoryName;
-  String? downloadUrl;
+  String downloadUrl;
 
-  ImageModel(
-      {required String imageName,
-      required String directoryName,
-      required String downloadUrl});
+  ImageModel({
+    this.imageName,
+    this.directoryName,
+    required this.downloadUrl,
+  });
 
   Map<String, dynamic> toJson() {
-    return <String, dynamic>{
+    return {
       'imageName': imageName,
       'directoryName': directoryName,
-      'downloadUrl': downloadUrl
+      'downloadUrl': downloadUrl,
     };
   }
 
-  factory ImageModel.fromJson(Map<String, dynamic> map) => ImageModel(
-      imageName: map['imageName'],
-      directoryName: map['directoryName'],
-      downloadUrl: map['downloadUrl']);
+  factory ImageModel.fromJson(Map<String, dynamic> map) {
+    return ImageModel(
+      imageName: map['imageName'] as String?,
+      directoryName: map['directoryName'] as String?,
+      downloadUrl: map['downloadUrl'] ?? '',
+    );
+  }
 }

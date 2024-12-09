@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:sklens_user_app/pages/view_telescope.dart';
 import 'package:sklens_user_app/utils/colors.dart';
 
 import '../auth/auth_service.dart';
@@ -100,6 +102,7 @@ class _LoginSectionState extends State<LoginSection> {
         EasyLoading.dismiss();
         _reset();
         widget.onSuccess();
+        context.goNamed(ViewTelescope.routeName);
       } on FirebaseAuthException catch (error) {
         EasyLoading.dismiss();
         widget.onFailure(error.message!);

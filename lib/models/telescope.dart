@@ -15,7 +15,6 @@ class Telescope {
   num avgRating = 0;
   num discount = 0;
   ImageModel thumbnail;
-  String name;
   List<ImageModel> additionalImage;
   String? description;
 
@@ -33,16 +32,14 @@ class Telescope {
       required this.avgRating,
       required this.discount,
       required this.thumbnail,
-      required this.name,
       required this.additionalImage,
       this.description});
 
-  Map<String, dynamic> toJson() {
-    return <String, dynamic>{
+  Map<dynamic, dynamic> toJson() {
+    return <dynamic, dynamic>{
       'id': id,
-      'name': name,
       'model': model,
-      'brand': brand,
+      'brand': brand.toJson(),
       'type': type,
       'dimension': dimension,
       'weightInPound': weightInpound,
@@ -52,17 +49,16 @@ class Telescope {
       'stock': stock,
       'avgRating': avgRating,
       'discount': discount,
-      'thumbnail': thumbnail,
-      'additionalImage': additionalImage,
+      'thumbnail': thumbnail.toJson(),
+      'additionalImage': additionalImage.map((image) => image.toJson()).toList(),
       'description': description
     };
   }
 
-  factory Telescope.fromJson(Map<String, dynamic> map) => Telescope(
-        id: map[brandFieldId],
-        name: map[brandFieldName],
+  factory Telescope.fromJson(Map<dynamic, dynamic> map) => Telescope(
+        id: map['id'],
         model: map['model'],
-        brand: map['brand'],
+        brand: Brand.fromJson(map['brand']),
         type: map['type'],
         dimension: map['dimension'],
         weightInpound: map['weightInPound'],
@@ -72,8 +68,10 @@ class Telescope {
         stock: map['stock'],
         avgRating: map['avgRating'],
         discount: map['discount'],
-        thumbnail: map['thumbnail'],
-        additionalImage: map['additionalImage'],
+        thumbnail: ImageModel.fromJson(map['thumbnail']),
+        additionalImage: (map['additionalImage'] as List)
+            .map((image) => ImageModel.fromJson(image))
+            .toList(),
         description: map['description'],
       );
 }
