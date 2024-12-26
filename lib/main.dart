@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:sklens_user_app/auth/auth_service.dart';
+import 'package:sklens_user_app/pages/cart_page.dart';
 import 'package:sklens_user_app/pages/login_page.dart';
 import 'package:sklens_user_app/pages/telescope_detail_page.dart';
 import 'package:sklens_user_app/pages/view_telescope.dart';
@@ -98,6 +99,11 @@ class MyApp extends StatelessWidget {
               path: TelescopeDetailPage.routeName,
               name: TelescopeDetailPage.routeName,
               builder: (context, state) =>  TelescopeDetailPage(id: state.extra! as String,),
+            ),
+            GoRoute(
+              path: CartPage.routeName,
+              name: CartPage.routeName,
+              builder: (context, state) =>  const CartPage(),
             )
           ]
         )

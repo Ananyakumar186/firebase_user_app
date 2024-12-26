@@ -35,8 +35,8 @@ class Telescope {
       required this.additionalImage,
       this.description});
 
-  Map<dynamic, dynamic> toJson() {
-    return <dynamic, dynamic>{
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
       'id': id,
       'model': model,
       'brand': brand.toJson(),
@@ -55,7 +55,7 @@ class Telescope {
     };
   }
 
-  factory Telescope.fromJson(Map<dynamic, dynamic> map) => Telescope(
+  factory Telescope.fromJson(Map<String, dynamic> map) => Telescope(
         id: map['id'],
         model: map['model'],
         brand: Brand.fromJson(map['brand']),

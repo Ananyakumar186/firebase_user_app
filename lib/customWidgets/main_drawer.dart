@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sklens_user_app/pages/cart_page.dart';
 
 import '../auth/auth_service.dart';
 import '../pages/login_page.dart';
@@ -23,7 +24,10 @@ class MainDrawer extends StatelessWidget {
             title: const Text("My Profile"),
           ),
           ListTile(
-            onTap: () {},
+            onTap: () {
+              context.pop();
+              context.goNamed(CartPage.routeName);
+            },
             leading: const Icon(Icons.shopping_cart),
             title: const Text("My Cart"),
           ),

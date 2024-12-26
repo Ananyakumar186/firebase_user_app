@@ -35,8 +35,10 @@ class _TelescopeDetailPageState extends State<TelescopeDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(telescope.model,
-          style: const TextStyle(overflow: TextOverflow.ellipsis),),
+        title: Text(
+          telescope.model,
+          style: const TextStyle(overflow: TextOverflow.ellipsis),
+        ),
       ),
       body: ListView(
         children: [
@@ -44,22 +46,31 @@ class _TelescopeDetailPageState extends State<TelescopeDetailPage> {
             width: double.infinity,
             height: 200,
             imageUrl: telescope.thumbnail.downloadUrl,
-            placeholder: (context, url) =>
-            const Center(
+            placeholder: (context, url) => const Center(
               child: CircularProgressIndicator(),
             ),
-            errorWidget: (context, url, error) =>
-            const Icon(Icons.error),
+            errorWidget: (context, url, error) => const Icon(Icons.error),
           ),
-          Padding(padding: EdgeInsets.symmetric(horizontal: 30.0),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30.0),
             child: Consumer<CartProvider>(
               builder: (context, provider, child) {
                 final isInCart = provider.isTelescopeInCart(telescope.id!);
-                return ElevatedButton.icon(onPressed: () {},
-                  icon: Icon(isInCart ? Icons.remove_shopping_cart: Icons.shopping_cart),
+                return ElevatedButton.icon(
+                  onPressed: () {
+                    if (isInCart) {
+                      provider.remoceFromCart(telescope.id!);
+                    } else {
+                      provider.addToCart(telescope);
+                    }
+                  },
+                  icon: Icon(isInCart
+                      ? Icons.remove_shopping_cart
+                      : Icons.shopping_cart),
                   label: Text(isInCart ? 'Remove from Cart' : 'Add to Cart'),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: isInCart ? kShrineBrown900 : kShrinePink400,
+                    backgroundColor:
+                        isInCart ? kShrineBrown900 : kShrinePink400,
                     foregroundColor: isInCart ? kShrinePink100 : kShrinePink50,
                   ),
                 );
@@ -67,8 +78,8 @@ class _TelescopeDetailPageState extends State<TelescopeDetailPage> {
             ),
           ),
           ListTile(
-            title: Text('Sale Price: $currencySymbol${priceAfterDiscount(
-                telescope.price, telescope.discount)}'),
+            title: Text(
+                'Sale Price: $currencySymbol${priceAfterDiscount(telescope.price, telescope.discount)}'),
             subtitle: Text('Stock: ${telescope.stock}'),
           )
         ],

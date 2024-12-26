@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:sklens_user_app/auth/auth_service.dart';
 import 'package:sklens_user_app/customWidgets/main_drawer.dart';
 import 'package:sklens_user_app/pages/login_page.dart';
+import 'package:sklens_user_app/providers/cart_provider.dart';
 import 'package:sklens_user_app/providers/telescope_provider.dart';
 import 'package:sklens_user_app/utils/helper_functions.dart';
 
@@ -23,6 +24,7 @@ class _ViewTelescopeState extends State<ViewTelescope> {
   @override
   void didChangeDependencies() {
     Provider.of<TelescopeProvider>(context, listen: false).getAllTelescopes();
+    Provider.of<CartProvider>(context, listen: false).getAllCartItems();
     super.didChangeDependencies();
   }
 

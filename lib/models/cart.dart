@@ -19,7 +19,7 @@ class CartModel {
       'telescopeModel': telescopeModel,
       'price': price,
       'imageUrl': imageUrl,
-      'quantity': quantity,
+      'quantity': quantity ?? 0,
     };
   }
 
