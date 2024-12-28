@@ -158,7 +158,7 @@ class _LoginPageState extends State<LoginPage> {
 
     if(EasyLoading.isShow) {
       EasyLoading.dismiss();
+      context.goNamed(ViewTelescope.routeName);
     }
-    context.goNamed(ViewTelescope.routeName);
   }
 }

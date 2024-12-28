@@ -52,7 +52,7 @@ dependencies:
   cached_network_image:
   connectivity_plus:
   flutter_rating_bar:
-
+  csc_picker: ^0.2.7
 dev_dependencies:
   flutter_test:
     sdk: flutter

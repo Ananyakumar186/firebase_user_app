@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:sklens_user_app/auth/auth_service.dart';
 import 'package:sklens_user_app/pages/cart_page.dart';
+import 'package:sklens_user_app/pages/checkout_page.dart';
 import 'package:sklens_user_app/pages/login_page.dart';
 import 'package:sklens_user_app/pages/telescope_detail_page.dart';
 import 'package:sklens_user_app/pages/view_telescope.dart';
@@ -104,6 +105,13 @@ class MyApp extends StatelessWidget {
               path: CartPage.routeName,
               name: CartPage.routeName,
               builder: (context, state) =>  const CartPage(),
+              routes: [
+                GoRoute(
+                  path: CheckoutPage.routeName,
+                  name: CheckoutPage.routeName,
+                  builder: (context, state) =>  const CheckoutPage(),
+                )
+              ]
             )
           ]
         )
