@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sklens_user_app/models/app_user.dart';
 import 'package:sklens_user_app/models/cart.dart';
+import 'package:sklens_user_app/models/order_model.dart';
 
 class DbHelper {
   static final FirebaseFirestore _db = FirebaseFirestore.instance;
@@ -8,6 +9,7 @@ class DbHelper {
   static const String collectionTelescope = 'Telescopes';
   static const String collectionBrand = 'Brands';
   static const String collectionCart = 'MyCartItems';
+  static const String collectionOrder = 'Orders';
 
   static Future<void> addUser(AppUser appUser) {
     return _db
@@ -45,8 +47,11 @@ class DbHelper {
   static Stream<QuerySnapshot<Map<String, dynamic>>> getAllTelescopes() =>
       _db.collection(collectionTelescope).snapshots();
 
+  static Stream<DocumentSnapshot<Map<String, dynamic>>> getUserInfo(uid) =>
+      _db.collection(collectionUser).doc(uid).snapshots();
+
   static Stream<QuerySnapshot<Map<String, dynamic>>> getAllCartItems(
-          String uid) =>
+      String uid) =>
       _db
           .collection(collectionUser)
           .doc(uid)
@@ -60,5 +65,32 @@ class DbHelper {
         .collection((collectionCart))
         .doc(model.telescopeId)
         .set(model.toJson());
+  }
+
+  static Future<void> saveOrder(OrderModel order) async {
+    final wb = _db.batch();
+    final orderDoc = _db.collection(collectionOrder).doc(order.orderId);
+    wb.set(orderDoc, order.toJSON());
+
+    for(final cartModel in order.itemDetails) {
+      final telescope = await _db.collection(collectionTelescope).doc(cartModel.telescopeId).get();
+      final previousStock = telescope.data()!['stock'];
+      final telDoc = _db.collection(collectionTelescope).doc(cartModel.telescopeId);
+      wb.update(telDoc, {'stock' : previousStock - cartModel.quantity });
+    }
+
+    final userDoc  = _db.collection(collectionUser).doc(order.appUser.uid);
+    wb.set(userDoc, order.appUser.toJson());
+    return wb.commit();
+  }
+
+  static Future<void> clearCart(String uid, List<CartModel> cartList) {
+    final wb = _db.batch();
+    for (final model in cartList) {
+      final doc = _db.collection(collectionUser).doc(uid).collection(
+          collectionCart).doc(model.telescopeId);
+      wb.delete(doc);
+    }
+    return wb.commit();
   }
 }

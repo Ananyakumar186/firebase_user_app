@@ -7,6 +7,7 @@ import 'package:sklens_user_app/customWidgets/main_drawer.dart';
 import 'package:sklens_user_app/pages/login_page.dart';
 import 'package:sklens_user_app/providers/cart_provider.dart';
 import 'package:sklens_user_app/providers/telescope_provider.dart';
+import 'package:sklens_user_app/providers/user_provider.dart';
 import 'package:sklens_user_app/utils/helper_functions.dart';
 
 import '../customWidgets/telescope_grid_item_view.dart';
@@ -25,6 +26,7 @@ class _ViewTelescopeState extends State<ViewTelescope> {
   void didChangeDependencies() {
     Provider.of<TelescopeProvider>(context, listen: false).getAllTelescopes();
     Provider.of<CartProvider>(context, listen: false).getAllCartItems();
+    Provider.of<UserProvider>(context, listen: false).getUserInfo();
     super.didChangeDependencies();
   }
 

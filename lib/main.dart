@@ -11,6 +11,7 @@ import 'package:sklens_user_app/pages/login_page.dart';
 import 'package:sklens_user_app/pages/telescope_detail_page.dart';
 import 'package:sklens_user_app/pages/view_telescope.dart';
 import 'package:sklens_user_app/providers/cart_provider.dart';
+import 'package:sklens_user_app/providers/order_provider.dart';
 import 'package:sklens_user_app/providers/telescope_provider.dart';
 import 'package:sklens_user_app/providers/user_provider.dart';
 import 'package:sklens_user_app/utils/colors.dart';
@@ -25,6 +26,7 @@ void main() async {
     ChangeNotifierProvider(create: (context) => UserProvider()),
     ChangeNotifierProvider(create: (context) => TelescopeProvider()),
     ChangeNotifierProvider(create: (context) => CartProvider()),
+    ChangeNotifierProvider(create: (context) => OrderProvider()),
   ], child:  MyApp()));
 }
 
