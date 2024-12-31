@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:csc_picker/csc_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:go_router/go_router.dart';
@@ -37,23 +38,18 @@ class CheckoutPage extends StatefulWidget {
 }
 
 class _CheckoutPageState extends State<CheckoutPage> {
-  var _streetAddress = TextEditingController();
-  var _pinCode = TextEditingController();
-  var _city = TextEditingController();
-  var _state = TextEditingController();
-  var _country = TextEditingController();
+  final _streetAddress = TextEditingController();
+  final _pinCode = TextEditingController();
+  final _city = TextEditingController();
+  final _state = TextEditingController();
+  final _country = TextEditingController();
   PaymentType _methodOption = PaymentType.cod;
   String optionSelected = PaymentType.cod.toString();
 
   @override
-  void initState() {
-
-    _streetAddress.text = '';
-    _pinCode.text = '';
-    _city.text = '';
-    _state.text = '';
-    _country.text = '';
-    super.initState();
+  void didChangeDependencies() {
+    _setAddress();
+    super.didChangeDependencies();
   }
 
   @override
@@ -136,6 +132,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     CSCPicker(
                       showCities: true,
                       showStates: true,
+                      currentCity: _city.text,
+                      currentCountry: _country.text,
+                      currentState: _state.text,
                       onCountryChanged: (value) {
                         setState(() {
                           _country.text = value;
@@ -177,10 +176,10 @@ class _CheckoutPageState extends State<CheckoutPage> {
                 onPressed: () {
                   _placeOrder();
                 },
-                child: Text('Place Order'),
                 style: ElevatedButton.styleFrom(
                     backgroundColor: kShrineBrown900,
                     foregroundColor: kShrineSurfaceWhite),
+                child: const Text('Place Order'),
               )
             ],
           ),
@@ -229,5 +228,17 @@ class _CheckoutPageState extends State<CheckoutPage> {
         showMsg(context, error.toString());
       }
     }
+  }
+
+  _setAddress() async {
+    final appUser = Provider.of<UserProvider>(context, listen: false).appUser;
+    if(appUser != null && appUser.userAddress != null){
+      _streetAddress.text = appUser.userAddress!.streetAdress;
+      _pinCode.text = appUser.userAddress!.postCode;
+      _city.text = appUser.userAddress!.city;
+      _state.text = appUser.userAddress!.state;
+      _country.text = appUser.userAddress!.country;
+    }
+
   }
 }

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:sklens_user_app/auth/auth_service.dart';
 import 'package:sklens_user_app/models/app_user.dart';
@@ -13,7 +14,7 @@ class UserProvider extends ChangeNotifier {
       email: user.email!,
       userName: name,
       phone: phone,
-      userCreationTime: Timestamp.fromDate(user.metadata.creationTime!));
+      userCreationTime: Timestamp.fromDate(user.metadata.creationTime!), userAddress: null);
     return DbHelper.addUser(appUser);
   }
 
@@ -21,6 +22,11 @@ class UserProvider extends ChangeNotifier {
     DbHelper.getUserInfo(AuthService.currentUser!.uid).listen((event) {
       if(event.exists){
         appUser = AppUser.fromJson(event.data()!);
+        if (kDebugMode) {
+          print('user info');
+          print(appUser);
+        }
+
         notifyListeners();
       }
     });

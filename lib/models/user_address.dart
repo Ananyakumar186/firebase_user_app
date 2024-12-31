@@ -1,5 +1,5 @@
 class UserAddress {
-  String streetAdress;
+  String streetAdress = '';
   String city;
   String postCode;
   String state;
@@ -24,7 +24,7 @@ class UserAddress {
   }
 
   factory UserAddress.fromJson(Map<String, dynamic> map) => UserAddress(
-      streetAdress: map['streetAddress'],
+      streetAdress: map['streetAddress'] ?? '',
       city: map['city'],
       postCode: map['postCode'],
       state: map['state'],

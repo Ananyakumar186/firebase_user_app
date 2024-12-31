@@ -69,7 +69,7 @@ class TelescopeGridItemView extends StatelessWidget {
                     ),
                   ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 4.0, vertical: 1),
+                  padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 1),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

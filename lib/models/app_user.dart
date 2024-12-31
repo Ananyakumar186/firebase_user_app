@@ -21,7 +21,7 @@ class AppUser {
     return <String, dynamic>{
       'uid': uid,
       'email': email,
-      'userAddress': userAddress,
+      'userAddress': userAddress?.toJson(),
       'userName': userName,
       'phone': phone,
       'userCreationTime': userCreationTime
@@ -31,7 +31,7 @@ class AppUser {
   factory AppUser.fromJson(Map<String, dynamic> map) => AppUser(
         uid: map['uid'],
         email: map['email'],
-        userAddress: map['userAddress'],
+        userAddress: UserAddress.fromJson(map['userAddress']),
         userName: map['userName'],
         phone: map['phone'],
         userCreationTime: map['userCreationTime'],
