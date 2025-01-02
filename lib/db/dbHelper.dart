@@ -117,4 +117,13 @@ class DbHelper {
         .doc(ratingModel.appUser.uid)
         .set(ratingModel.toJson());
   }
+
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getAllOrders(uid) {
+    final orderList = _db.collection(collectionOrder).snapshots();
+    final userFilteredOrders = [];
+    return orderList;
+    // for(var order in orderList) {
+    //
+    // }
+  }
 }
