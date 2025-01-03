@@ -8,6 +8,7 @@ import 'package:sklens_user_app/auth/auth_service.dart';
 import 'package:sklens_user_app/pages/cart_page.dart';
 import 'package:sklens_user_app/pages/checkout_page.dart';
 import 'package:sklens_user_app/pages/login_page.dart';
+import 'package:sklens_user_app/pages/my_profile_page.dart';
 import 'package:sklens_user_app/pages/orders_page.dart';
 import 'package:sklens_user_app/pages/telescope_detail_page.dart';
 import 'package:sklens_user_app/pages/view_telescope.dart';
@@ -120,6 +121,11 @@ class MyApp extends StatelessWidget {
               path: OrdersPage.routeName,
               name: OrdersPage.routeName,
               builder: (context, state) =>  const OrdersPage(),
+            ),
+            GoRoute(
+              path: MyProfilePage.routeName,
+              name: MyProfilePage.routeName,
+              builder: (context, state) => MyProfilePage(),
             )
           ]
         )

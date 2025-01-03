@@ -1,16 +1,11 @@
-import 'package:cached_network_image/cached_network_image.dart';
+
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:sklens_user_app/auth/auth_service.dart';
 import 'package:sklens_user_app/customWidgets/main_drawer.dart';
-import 'package:sklens_user_app/pages/login_page.dart';
 import 'package:sklens_user_app/providers/cart_provider.dart';
 import 'package:sklens_user_app/providers/order_provider.dart';
 import 'package:sklens_user_app/providers/telescope_provider.dart';
 import 'package:sklens_user_app/providers/user_provider.dart';
-import 'package:sklens_user_app/utils/helper_functions.dart';
-
 import '../customWidgets/telescope_grid_item_view.dart';
 
 class ViewTelescope extends StatefulWidget {
@@ -39,13 +34,6 @@ class _ViewTelescopeState extends State<ViewTelescope> {
       drawer: const MainDrawer(),
       appBar: AppBar(
         title: const Text('Telescopes'),
-        // actions: [
-        //   IconButton(
-        //       onPressed: () {
-        //         _logout();
-        //       },
-        //       icon: Icon(Icons.logout))
-        // ],
       ),
       body: Consumer<TelescopeProvider>(
         builder: (context, provider, child) => GridView.builder(

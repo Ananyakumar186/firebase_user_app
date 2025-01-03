@@ -27,16 +27,37 @@ class _OrdersPageState extends State<OrdersPage> {
             Column(
               children: [
                 Expanded(
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: provider.itemDetails.length,
-                      itemBuilder: (context, index) {
-                        final itemDetail = provider.itemDetails[index];
-                        return OrderItemView(
-                            itemDetail: itemDetail, provider: provider);
-                      },
-                    ),
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: provider.orderList.length,
+                    itemBuilder: (context, index) {
+                      final orderList = provider.orderList[index];
+                      return Card(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: [
+                              ListTile(
+                                title: Text(orderList.orderDate.toDate().toString()),
+                                trailing: Text(orderList.orderStatus)
+                              ),
+                              ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: orderList.itemDetails.length,
+                                itemBuilder: (context, index) {
+                                  final itemDetail = orderList.itemDetails[index];
+                                  return OrderItemView(
+                                      itemDetail: itemDetail, provider: provider);
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
                 ),
+
               ],
             ),
       ),

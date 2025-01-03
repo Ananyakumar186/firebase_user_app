@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sklens_user_app/pages/cart_page.dart';
+import 'package:sklens_user_app/pages/my_profile_page.dart';
 import 'package:sklens_user_app/pages/orders_page.dart';
 
 import '../auth/auth_service.dart';
@@ -18,9 +19,13 @@ class MainDrawer extends StatelessWidget {
           Container(
             color: Theme.of(context).colorScheme.primary,
             height: 150,
+            child: const Center(child: Text('StarGaze E-Shop', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic),)),
           ),
           ListTile(
-            onTap: () {},
+            onTap: () {
+              context.pop();
+              context.goNamed(MyProfilePage.routeName);
+            },
             leading: const Icon(Icons.person),
             title: const Text("My Profile"),
           ),
@@ -34,6 +39,7 @@ class MainDrawer extends StatelessWidget {
           ),
           ListTile(
             onTap: () {
+              context.pop();
               context.goNamed(OrdersPage.routeName);
             },
             leading: const Icon(Icons.monetization_on),
